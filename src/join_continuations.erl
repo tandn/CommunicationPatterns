@@ -1,9 +1,14 @@
 -module(join_continuations).
--compile([fact/1,treeprod/1]).
+-export([test/0,fact/1,treeprod/1]).
+
+test() ->
+    true = (fact(5) == 120),
+    true = (40320 == treeprod({{{1,2},{3,4}},{{5,6},{7,8}}})).
+
 
 %% compute factorial
 fact(N) when N >= 0 ->
-    Pid = spawn(fun fact/0),
+    Pid = spawn(fun() -> fact() end),
     Pid ! {N, self()},
     receive
 	Ret -> Ret
@@ -14,7 +19,7 @@ fact() ->
 	{N, Cust} when N == 0 ->
 	    Cust ! 1;
 	{N, Cust} ->
-	    C = spawn(fun join_cont/2 [Cust, N]),
+	    C = spawn(fun() -> join_cont(Cust, N) end),
 	    self() ! {N - 1, C}
     end,
     fact().
@@ -42,7 +47,7 @@ treeprod() ->
 	{T, Cust} when is_integer(T) ->
 	    Cust ! T;
 	{T, Cust} ->
-	    NewCust = spawn(fun join_cont/3 [Cust, 0, nil]),
+	    NewCust = spawn(fun() -> join_cont(Cust, 0, nil) end),
 	    self() ! {left(T), NewCust},
 	    self() ! {right(T), NewCust}
     end,
