@@ -1,0 +1,18 @@
+{application, sc,
+ [{description, "An OTP application"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, { sc_app, []}},
+  {applications,
+   [kernel,
+    stdlib,
+    rd
+   ]},
+  {env,[{contact_nodes,[c1@localhost]},
+       {wait_contact_time, 2000},
+       {wait_table_time, 2000}]},
+  {modules, []},
+  {maintainers, []},
+  {licenses, ["Apache 2.0"]},
+  {links, []}
+ ]}.
