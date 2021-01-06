@@ -1,6 +1,6 @@
 #### A distributed cache that uses processes to hold {Key,Value} pairs.
 
-### API: sc:insert/2 (sc:update/2), sc:lookup/1, sc:delete/1
+#### API: sc:insert/2 (sc:update/2), sc:lookup/1, sc:delete/1
 
 - Distribution relies on Mnesia - mapping between Key and Pid
 - Implemented by following chapters 4,6,7,8,9,11 in "Erlang and OTP in Action".
